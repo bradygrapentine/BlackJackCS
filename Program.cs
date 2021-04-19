@@ -49,8 +49,7 @@ namespace BlackJackCS
 
         }
 
-        // HIT METHOD // -- GOTTA ADD SOMETHING HERE TO STOP HITS WHEN playerHand > 21
-
+        // HIT METHOD //
         static void Hit(List<Card> playerHand, List<Card> deck, List<Card> houseHand)
         {
             playerHand.Add(deck[0]);
@@ -61,7 +60,6 @@ namespace BlackJackCS
         }
 
         // STAND METHOD //
-
         static void Stand(List<Card> houseHand, List<Card> playerHand, List<Card> deck)
         {
             Console.WriteLine("REVEALING HOUSE HAND:");
@@ -81,8 +79,8 @@ namespace BlackJackCS
                     Console.WriteLine();
                     deck.RemoveAt(0);
                 }
-                Console.WriteLine($"The total value of your hand is {HandTotal(playerHand)}.");
-                Console.WriteLine();
+                // Console.WriteLine($"The total value of your hand is {HandTotal(playerHand)}.");
+                // Console.WriteLine();
             }
 
         }
@@ -141,55 +139,13 @@ namespace BlackJackCS
                 Console.WriteLine($"The {houseHand[1].Rank} of {houseHand[1].Suit} was the second card dealt to the House.");
                 Console.WriteLine();
 
-                // SHOWING PLAYERHAND TO PLAYER AND CHECKING SCORE //            
-
-                if (HandTotal(playerHand) > 21)
+                // SHOWING PLAYERHAND TO PLAYER AND CHECKING SCORE //
+                Console.WriteLine("DISPLAYING PLAYER HAND:");
+                Console.WriteLine($"You were dealt the {playerHand[0].Rank} of {playerHand[0].Suit} and the {playerHand[1].Rank} of {playerHand[1].Suit}.");
+                Console.WriteLine($"The total value of your hand is {HandTotal(playerHand)}.");
+                Console.WriteLine();
+                if (HandTotal(playerHand) < 22)
                 {
-                    Console.WriteLine("DISPLAYING PLAYER HAND:");
-                    Console.WriteLine($"You were dealt the {playerHand[0].Rank} of {playerHand[0].Suit} and the {playerHand[1].Rank} of {playerHand[1].Suit}.");
-                    Console.WriteLine($"The total value of your hand is {HandTotal(playerHand)}.");
-                    Console.WriteLine();
-                    Console.WriteLine("You busted. You lose.");
-                    Console.WriteLine();
-                }
-                else if (HandTotal(houseHand) > 21)
-                {
-                    Console.WriteLine("DISPLAYING PLAYER HAND:");
-                    Console.WriteLine($"You were dealt the {playerHand[0].Rank} of {playerHand[0].Suit} and the {playerHand[1].Rank} of {playerHand[1].Suit}.");
-                    Console.WriteLine($"The total value of your hand is {HandTotal(playerHand)}.");
-                    Console.WriteLine();
-                    // Console.WriteLine("The House busted. You win.");
-                    // Console.WriteLine();
-                }
-                else if (HandTotal(playerHand) == 21)
-                {
-                    Console.WriteLine("DISPLAYING PLAYER HAND:");
-                    Console.WriteLine($"You were dealt the {playerHand[0].Rank} of {playerHand[0].Suit} and the {playerHand[1].Rank} of {playerHand[1].Suit}.");
-                    Console.WriteLine($"The total value of your hand is {HandTotal(playerHand)}.");
-                    Console.WriteLine();
-                    Stand(houseHand, playerHand, deck);
-                    // if (HandTotal(playerHand) < HandTotal(houseHand))
-                    // {
-                    //     Console.WriteLine("The House busted. You win.");
-                    //     Console.WriteLine();
-                    // }
-                    // else if (HandTotal(playerHand) == HandTotal(houseHand))
-                    // {
-                    //     Console.WriteLine("Tie goes to the dealer! You lose.");
-                    //     Console.WriteLine();
-                    // }
-                    // else
-                    // {
-                    //     Console.WriteLine("You win!");
-                    //     Console.WriteLine();
-                    // }
-                }
-                else if (HandTotal(playerHand) < 21)
-                {
-                    Console.WriteLine("DISPLAYING PLAYER HAND:");
-                    Console.WriteLine($"You were dealt the {playerHand[0].Rank} of {playerHand[0].Suit} and the {playerHand[1].Rank} of {playerHand[1].Suit}.");
-                    Console.WriteLine($"The total value of your hand is {HandTotal(playerHand)}.");
-                    Console.WriteLine();
                     Console.WriteLine("Hit or Stand?");
                     Console.Write("(Type H and press Enter for hit. Type S (or any other key) and press Enter for stand.) ");
                     var playerMove = Console.ReadLine();
@@ -218,7 +174,6 @@ namespace BlackJackCS
                 }
 
                 //---------------------CALCULATING SCORE--------------------//      
-
                 if (HandTotal(playerHand) > 21)
                 {
                     Console.WriteLine("You busted. You lose.");
@@ -245,7 +200,6 @@ namespace BlackJackCS
                     Console.WriteLine("You lose.");
                     Console.WriteLine();
                 }
-
                 Console.WriteLine("GAME OVER. DISPLAYING RESTART OPTION.");
                 Console.WriteLine();
                 Console.WriteLine("Do you want to play again?");
@@ -265,6 +219,5 @@ namespace BlackJackCS
                 Console.WriteLine();
             }
         }
-
     }
 }
