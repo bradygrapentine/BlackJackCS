@@ -64,10 +64,10 @@ namespace BlackJackCS
 
         static void Stand(List<Card> houseHand, List<Card> playerHand, List<Card> deck)
         {
+            Console.WriteLine("REVEALING HOUSE HAND:");
+            Console.WriteLine($"The House was dealt the {houseHand[0].Rank} of {houseHand[0].Suit} and the {houseHand[1].Rank} of {houseHand[1].Suit}.");
             if (HandTotal(houseHand) >= 17)
             {
-                Console.WriteLine("REVEALING HOUSE HAND:");
-                Console.WriteLine($"The House was dealt the {houseHand[0].Rank} of {houseHand[0].Suit} and the {houseHand[1].Rank} of {houseHand[1].Suit}.");
                 Console.WriteLine($"The total value of the House's hand is {HandTotal(houseHand)}.");
                 Console.WriteLine();
             }
@@ -75,8 +75,6 @@ namespace BlackJackCS
             {
                 while (HandTotal(houseHand) < 17)
                 {
-                    Console.WriteLine("REVEALING HOUSE HAND:");
-                    Console.WriteLine($"The House was dealt the {houseHand[0].Rank} of {houseHand[0].Suit} and the {houseHand[1].Rank} of {houseHand[1].Suit}.");
                     houseHand.Add(deck[0]);
                     Console.WriteLine($"{deck[0].Rank} of {deck[0].Suit} added to the House's hand.");
                     Console.WriteLine($"The total value of the House's hand is {HandTotal(houseHand)}.");
@@ -160,8 +158,8 @@ namespace BlackJackCS
                     Console.WriteLine($"You were dealt the {playerHand[0].Rank} of {playerHand[0].Suit} and the {playerHand[1].Rank} of {playerHand[1].Suit}.");
                     Console.WriteLine($"The total value of your hand is {HandTotal(playerHand)}.");
                     Console.WriteLine();
-                    Console.WriteLine("The House busted. You win.");
-                    Console.WriteLine();
+                    // Console.WriteLine("The House busted. You win.");
+                    // Console.WriteLine();
                 }
                 else if (HandTotal(playerHand) == 21)
                 {
@@ -170,21 +168,21 @@ namespace BlackJackCS
                     Console.WriteLine($"The total value of your hand is {HandTotal(playerHand)}.");
                     Console.WriteLine();
                     Stand(houseHand, playerHand, deck);
-                    if (HandTotal(playerHand) < HandTotal(houseHand))
-                    {
-                        Console.WriteLine("The House busted. You win.");
-                        Console.WriteLine();
-                    }
-                    else if (HandTotal(playerHand) == HandTotal(houseHand))
-                    {
-                        Console.WriteLine("Tie goes to the dealer! You lose.");
-                        Console.WriteLine();
-                    }
-                    else
-                    {
-                        Console.WriteLine("You win!");
-                        Console.WriteLine();
-                    }
+                    // if (HandTotal(playerHand) < HandTotal(houseHand))
+                    // {
+                    //     Console.WriteLine("The House busted. You win.");
+                    //     Console.WriteLine();
+                    // }
+                    // else if (HandTotal(playerHand) == HandTotal(houseHand))
+                    // {
+                    //     Console.WriteLine("Tie goes to the dealer! You lose.");
+                    //     Console.WriteLine();
+                    // }
+                    // else
+                    // {
+                    //     Console.WriteLine("You win!");
+                    //     Console.WriteLine();
+                    // }
                 }
                 else if (HandTotal(playerHand) < 21)
                 {
@@ -213,11 +211,14 @@ namespace BlackJackCS
                             break;
                         }
                     }
+                    if (HandTotal(playerHand) < 22)
+                    {
+                        Stand(houseHand, playerHand, deck);
+                    }
                 }
-                Stand(houseHand, playerHand, deck);
 
-                //---------------------CALCULATING SCORE--------------------//                    
-                //----------------------------------------------------------//
+                //---------------------CALCULATING SCORE--------------------//      
+
                 if (HandTotal(playerHand) > 21)
                 {
                     Console.WriteLine("You busted. You lose.");
