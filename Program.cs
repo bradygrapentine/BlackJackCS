@@ -53,8 +53,8 @@ namespace BlackJackCS
         static void Hit(List<Card> playerHand, List<Card> deck, List<Card> houseHand)
         {
             playerHand.Add(deck[0]);
-            Console.WriteLine($"{deck[0].Rank} of {deck[0].Suit} added to your hand.");
-            Console.WriteLine($"The total value is {HandTotal(playerHand)}.");
+            Console.WriteLine($"The {deck[0].Rank} of {deck[0].Suit} was added to your hand.");
+            Console.WriteLine($"The total value of your hand is {HandTotal(playerHand)}.");
             Console.WriteLine();
             deck.RemoveAt(0);
         }
@@ -64,34 +64,26 @@ namespace BlackJackCS
         {
             Console.WriteLine("REVEALING HOUSE HAND:");
             Console.WriteLine($"The House was dealt the {houseHand[0].Rank} of {houseHand[0].Suit} and the {houseHand[1].Rank} of {houseHand[1].Suit}.");
-            if (HandTotal(houseHand) >= 17)
+            Console.WriteLine($"The total value of the House's hand is {HandTotal(houseHand)}.");
+            Console.WriteLine();
+            while (HandTotal(houseHand) < 17)
             {
-                Console.WriteLine($"The total value of the House's hand is {HandTotal(houseHand)}.");
+                houseHand.Add(deck[0]);
+                Console.WriteLine($"The {deck[0].Rank} of {deck[0].Suit} was added to the House's hand.");
+                Console.WriteLine($"The new total value of the House's hand is {HandTotal(houseHand)}.");
                 Console.WriteLine();
+                deck.RemoveAt(0);
             }
-            else
-            {
-                while (HandTotal(houseHand) < 17)
-                {
-                    houseHand.Add(deck[0]);
-                    Console.WriteLine($"{deck[0].Rank} of {deck[0].Suit} added to the House's hand.");
-                    Console.WriteLine($"The total value of the House's hand is {HandTotal(houseHand)}.");
-                    Console.WriteLine();
-                    deck.RemoveAt(0);
-                }
-                // Console.WriteLine($"The total value of your hand is {HandTotal(playerHand)}.");
-                // Console.WriteLine();
-            }
-
         }
 
         static void Main(string[] args)
         {
             // GENERATING DECK //
-            Console.WriteLine("GENERATING DECK.");
             var keepPlaying = true;
             while (keepPlaying)
             {
+                Console.WriteLine();
+                Console.WriteLine("GENERATING DECK");
                 var deck = new List<Card>();
                 var suits = new List<string>() { "Clubs", "Diamonds", "Hearts", "Spades" };
                 var ranks = new List<string>() { "Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King" };
@@ -105,7 +97,7 @@ namespace BlackJackCS
                 }
 
                 // SHUFFLING DECK //
-                Console.WriteLine("SHUFFLING DECK.");
+                Console.WriteLine("SHUFFLING DECK");
                 var cardCount = deck.Count;
                 for (var rightIndex = cardCount - 1; rightIndex >= 0; rightIndex--)
                 {
@@ -119,7 +111,8 @@ namespace BlackJackCS
                 }
 
                 // DEALING PLAYER AND HOUSE HANDS //
-                Console.WriteLine("DEALING HANDS.");
+                Console.WriteLine("DEALING HANDS");
+                Console.WriteLine();
                 var playerHand = new List<Card>();
                 var houseHand = new List<Card>();
                 for (var index2 = 0; index2 < 4; index2++)
@@ -135,19 +128,18 @@ namespace BlackJackCS
                         deck.RemoveAt(0);
                     }
                 }
-                Console.WriteLine();
-                Console.WriteLine($"The {houseHand[1].Rank} of {houseHand[1].Suit} was the second card dealt to the House.");
-                Console.WriteLine();
 
-                // SHOWING PLAYERHAND TO PLAYER AND CHECKING SCORE //
+                // SHOWING PLAYERHAND TO PLAYER, CHECKING SCORE, AND SHOWING SECOND CARD IN THE HOUSE'S HAND TO PLAYER //
                 Console.WriteLine("DISPLAYING PLAYER HAND:");
                 Console.WriteLine($"You were dealt the {playerHand[0].Rank} of {playerHand[0].Suit} and the {playerHand[1].Rank} of {playerHand[1].Suit}.");
                 Console.WriteLine($"The total value of your hand is {HandTotal(playerHand)}.");
                 Console.WriteLine();
+                Console.WriteLine($"The {houseHand[1].Rank} of {houseHand[1].Suit} was the second card dealt to the House.");
+                Console.WriteLine();
                 if (HandTotal(playerHand) < 22)
                 {
                     Console.WriteLine("Hit or Stand?");
-                    Console.Write("(Type H and press Enter for hit. Type S (or any other key) and press Enter for stand.) ");
+                    Console.Write("(Press H then press Enter to hit. Press any key (or none at all) then Press Enter to stand.) ");
                     var playerMove = Console.ReadLine();
                     Console.WriteLine();
                     string playerMoveLowercase = playerMove.ToLower();
@@ -157,7 +149,7 @@ namespace BlackJackCS
                         if (HandTotal(playerHand) < 22)
                         {
                             Console.WriteLine("Hit or Stand?");
-                            Console.Write("(Type H and press Enter for hit. Type S (or any other key) and press Enter for stand.) ");
+                            Console.Write("(Press H then press Enter to hit. Press any key (or none at all) then Press Enter to stand.) ");
                             playerMove = Console.ReadLine();
                             Console.WriteLine();
                             playerMoveLowercase = playerMove.ToLower();
@@ -181,41 +173,41 @@ namespace BlackJackCS
                 }
                 else if (HandTotal(houseHand) > 21)
                 {
-                    Console.WriteLine("The House busted. You win.");
+                    Console.WriteLine("The House busted. You win!");
                     Console.WriteLine();
                 }
                 else if (HandTotal(playerHand) == HandTotal(houseHand))
                 {
-                    Console.WriteLine("Tie goes to the dealer! You lose.");
+                    Console.WriteLine("Tie goes to the House! You lose.");
                     Console.WriteLine();
                 }
                 else if (HandTotal(playerHand) > HandTotal(houseHand))
                 {
                     Console.WriteLine("You win!");
                     Console.WriteLine();
-
                 }
                 else if (HandTotal(playerHand) < HandTotal(houseHand))
                 {
                     Console.WriteLine("You lose.");
                     Console.WriteLine();
                 }
-                Console.WriteLine("GAME OVER. DISPLAYING RESTART OPTION.");
+                Console.WriteLine("GAME OVER");
                 Console.WriteLine();
                 Console.WriteLine("Do you want to play again?");
-                Console.Write("(Type Y and press Enter for yes. Type N (or any other key) and press Enter for no.) ");
+                Console.Write("(Press Y then press Enter for yes. Press any key (or none at all) then press Enter for no.) ");
                 var playAgain2 = Console.ReadLine();
-                Console.WriteLine();
                 string playAgain2Lowercase = playAgain2.ToLower();
                 if (playAgain2Lowercase == "y")
                 {
+
                     continue;
                 }
                 else
                 {
                     keepPlaying = false;
                 }
-                Console.WriteLine("Goodbye.");
+                Console.WriteLine();
+                Console.WriteLine("Thanks for playing.");
                 Console.WriteLine();
             }
         }
