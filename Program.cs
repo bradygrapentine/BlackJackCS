@@ -53,19 +53,11 @@ namespace BlackJackCS
 
         static void Hit(List<Card> playerHand, List<Card> deck, List<Card> houseHand)
         {
-            if (HandTotal(playerHand) < 22)
-            {
-                playerHand.Add(deck[0]);
-                Console.WriteLine($"{deck[0].Rank} of {deck[0].Suit} added to your hand.");
-                Console.WriteLine($"The total value is {HandTotal(playerHand)}.");
-                Console.WriteLine();
-                deck.RemoveAt(0);
-            }
-            else
-            {
-                Stand(houseHand, playerHand, deck);
-            }
-
+            playerHand.Add(deck[0]);
+            Console.WriteLine($"{deck[0].Rank} of {deck[0].Suit} added to your hand.");
+            Console.WriteLine($"The total value is {HandTotal(playerHand)}.");
+            Console.WriteLine();
+            deck.RemoveAt(0);
         }
 
         // STAND METHOD //
@@ -205,60 +197,52 @@ namespace BlackJackCS
                     var playerMove = Console.ReadLine();
                     Console.WriteLine();
                     string playerMoveLowercase = playerMove.ToLower();
-                    if (playerMoveLowercase == "h")
+                    while (playerMoveLowercase == "h")
                     {
-                        while (playerMoveLowercase == "h")
+                        Hit(playerHand, deck, houseHand);
+                        if (HandTotal(playerHand) < 22)
                         {
-                            if (HandTotal(playerHand) > 21)
-                            {
-                                break;
-                            }
-                            else
-                            {
-                                Hit(playerHand, deck, houseHand);
-                                Console.WriteLine("Hit or Stand?");
-                                Console.Write("(Type H and press Enter for hit. Type S (or any other key) and press Enter for stand.) ");
-                                playerMove = Console.ReadLine();
-                                Console.WriteLine();
-                                playerMoveLowercase = playerMove.ToLower();
-                            }
+                            Console.WriteLine("Hit or Stand?");
+                            Console.Write("(Type H and press Enter for hit. Type S (or any other key) and press Enter for stand.) ");
+                            playerMove = Console.ReadLine();
+                            Console.WriteLine();
+                            playerMoveLowercase = playerMove.ToLower();
                         }
-                        Stand(houseHand, playerHand, deck);
+                        else
+                        {
+                            break;
+                        }
+                    }
+                }
+                Stand(houseHand, playerHand, deck);
 
-                    }
-                    else
-                    {
-                        Stand(houseHand, playerHand, deck);
-                    }
+                //---------------------CALCULATING SCORE--------------------//                    
+                //----------------------------------------------------------//
+                if (HandTotal(playerHand) > 21)
+                {
+                    Console.WriteLine("You busted. You lose.");
+                    Console.WriteLine();
+                }
+                else if (HandTotal(houseHand) > 21)
+                {
+                    Console.WriteLine("The House busted. You win.");
+                    Console.WriteLine();
+                }
+                else if (HandTotal(playerHand) == HandTotal(houseHand))
+                {
+                    Console.WriteLine("Tie goes to the dealer! You lose.");
+                    Console.WriteLine();
+                }
+                else if (HandTotal(playerHand) > HandTotal(houseHand))
+                {
+                    Console.WriteLine("You win!");
+                    Console.WriteLine();
 
-                    //---------------------CALCULATING SCORE--------------------//                    
-                    //----------------------------------------------------------//
-                    if (HandTotal(playerHand) > 21)
-                    {
-                        Console.WriteLine("You busted. You lose.");
-                        Console.WriteLine();
-                    }
-                    else if (HandTotal(houseHand) > 21)
-                    {
-                        Console.WriteLine("The House busted. You win.");
-                        Console.WriteLine();
-                    }
-                    else if (HandTotal(playerHand) == HandTotal(houseHand))
-                    {
-                        Console.WriteLine("Tie goes to the dealer! You lose.");
-                        Console.WriteLine();
-                    }
-                    else if (HandTotal(playerHand) > HandTotal(houseHand))
-                    {
-                        Console.WriteLine("You win!");
-                        Console.WriteLine();
-
-                    }
-                    else if (HandTotal(playerHand) < HandTotal(houseHand))
-                    {
-                        Console.WriteLine("You lose.");
-                        Console.WriteLine();
-                    }
+                }
+                else if (HandTotal(playerHand) < HandTotal(houseHand))
+                {
+                    Console.WriteLine("You lose.");
+                    Console.WriteLine();
                 }
 
                 Console.WriteLine("GAME OVER. DISPLAYING RESTART OPTION.");
@@ -276,9 +260,10 @@ namespace BlackJackCS
                 {
                     keepPlaying = false;
                 }
+                Console.WriteLine("Goodbye.");
+                Console.WriteLine();
             }
-            Console.WriteLine("Goodbye. :)");
-            Console.WriteLine();
         }
+
     }
 }
