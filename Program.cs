@@ -140,19 +140,17 @@ namespace BlackJackCS
                 {
                     Console.WriteLine("Hit or Stand?");
                     Console.Write("(Press H then press Enter to hit. Press any key (or none at all) then Press Enter to stand.) ");
-                    var playerMove = Console.ReadLine();
+                    var playerMove = Console.ReadLine().ToLower();
                     Console.WriteLine();
-                    string playerMoveLowercase = playerMove.ToLower();
-                    while (playerMoveLowercase == "h")
+                    while (playerMove == "h")
                     {
                         Hit(playerHand, deck, houseHand);
                         if (HandTotal(playerHand) < 22)
                         {
                             Console.WriteLine("Hit or Stand?");
                             Console.Write("(Press H then press Enter to hit. Press any key (or none at all) then Press Enter to stand.) ");
-                            playerMove = Console.ReadLine();
+                            playerMove = Console.ReadLine().ToLower();
                             Console.WriteLine();
-                            playerMoveLowercase = playerMove.ToLower();
                         }
                         else
                         {
@@ -178,16 +176,22 @@ namespace BlackJackCS
                 }
                 else if (HandTotal(playerHand) == HandTotal(houseHand))
                 {
+                    Console.WriteLine($"Player Hand Total: {HandTotal(playerHand)}");
+                    Console.WriteLine($"House Hand Total: {HandTotal(houseHand)}");         
                     Console.WriteLine("Tie goes to the House! You lose.");
                     Console.WriteLine();
                 }
                 else if (HandTotal(playerHand) > HandTotal(houseHand))
                 {
+                    Console.WriteLine($"Player Hand Total: {HandTotal(playerHand)}");
+                    Console.WriteLine($"House Hand Total: {HandTotal(houseHand)}");         
                     Console.WriteLine("You win!");
                     Console.WriteLine();
                 }
                 else if (HandTotal(playerHand) < HandTotal(houseHand))
                 {
+                    Console.WriteLine($"Player Hand Total: {HandTotal(playerHand)}");
+                    Console.WriteLine($"House Hand Total: {HandTotal(houseHand)}");               
                     Console.WriteLine("You lose.");
                     Console.WriteLine();
                 }
@@ -195,11 +199,9 @@ namespace BlackJackCS
                 Console.WriteLine();
                 Console.WriteLine("Do you want to play again?");
                 Console.Write("(Press Y then press Enter for yes. Press any key (or none at all) then press Enter for no.) ");
-                var playAgain2 = Console.ReadLine();
-                string playAgain2Lowercase = playAgain2.ToLower();
-                if (playAgain2Lowercase == "y")
+                var playAgain = Console.ReadLine().ToLower();
+                if (playAgain == "y")
                 {
-
                     continue;
                 }
                 else
